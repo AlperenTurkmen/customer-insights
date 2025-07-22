@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/customers")
+@RequestMapping("/api/customers")
 public class CustomerController {
 
     @Autowired
@@ -31,13 +31,15 @@ public class CustomerController {
     }
 
     @PutMapping("/{id}")
-    public Customer updateCustomer(@PathVariable Long id, @RequestBody Customer updatedCustomer) {
-        return customerRepository.findById(id).map(customer -> {
-            customer.setName(updatedCustomer.getName());
-            customer.setEmail(updatedCustomer.getEmail());
-            return customerRepository.save(customer);
-        }).orElseThrow(() -> new RuntimeException("Customer not found with id " + id));
-    }
+public Customer updateCustomer(@PathVariable Long id, @RequestBody Customer updatedCustomer) {
+    return customerRepository.findById(id).map(customer -> {
+        customer.setFirstName(updatedCustomer.getFirstName());
+        customer.setLastName(updatedCustomer.getLastName());
+        customer.setEmail(updatedCustomer.getEmail());
+        return customerRepository.save(customer);
+    }).orElseThrow(() -> new RuntimeException("Customer not found with id " + id));
+}
+
 
     @DeleteMapping("/{id}")
     public void deleteCustomer(@PathVariable Long id) {
